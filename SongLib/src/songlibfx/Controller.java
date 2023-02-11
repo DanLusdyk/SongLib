@@ -34,7 +34,7 @@ public class Controller {
 
     @FXML
     void addSong(MouseEvent event) {
-        songList.getItems().add(name.getText());
+        songList.getItems().add(name.getText() + " " + artist.getText());
     }
 
 }
