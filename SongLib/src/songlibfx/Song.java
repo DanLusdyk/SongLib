@@ -21,7 +21,7 @@ public class Song {
 		this.artist = new SimpleStringProperty(artist);
 		
 		// Some initial dummy data, just for convenient testing.
-		this.album = new SimpleStringProperty("some album");
+		this.album = new SimpleStringProperty("some_album");
 		this.year = new SimpleIntegerProperty(1234);
 	}
 	

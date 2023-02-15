@@ -2,6 +2,10 @@ package songlibfx;
 
 import java.io.IOException;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
+import org.w3c.dom.Element;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,21 +13,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 public class Main extends Application {
 	
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
-	
+	private XMLHandler xmlHandler = new XMLHandler();
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 	
 	public Main() {
 		// Add some sample data
-		songData.add(new Song("test", "artist"));
-		songData.add(new Song("test2", "artist2"));
-		songData.add(new Song("test", "artist"));
-		songData.add(new Song("test", "artist"));
-		songData.add(new Song("test", "artist"));
+		xmlHandler.createFile();
+		xmlHandler.initXML();
+		xmlHandler.writeSong(new Song("test", "artist"));
+		xmlHandler.writeSong(new Song("test2", "artist2"));
+		xmlHandler.writeSong(new Song("test3", "artist3"));
+		songData =  xmlHandler.readSong();
+//		songData.add(new Song("test", "artist"));
+//		songData.add(new Song("test2", "artist2"));
+//		songData.add(new Song("test", "artist"));
+//		songData.add(new Song("test", "artist"));
+//		songData.add(new Song("test", "artist"));
+		
 	}
 	
 	public ObservableList<Song> getSongData() {
