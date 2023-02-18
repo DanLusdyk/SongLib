@@ -17,22 +17,22 @@ public class Main extends Application {
 	
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
-	private XMLHandler xmlHandler = new XMLHandler();
+	//private XMLHandler xmlHandler = new XMLHandler();
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 	
 	public Main() {
 		// Add some sample data
-		xmlHandler.createFile();
-		xmlHandler.initXML();
-		xmlHandler.writeSong(new Song("test", "artist"));
-		xmlHandler.writeSong(new Song("test2", "artist2"));
-		xmlHandler.writeSong(new Song("test3", "artist3"));
-		songData =  xmlHandler.readSong();
-//		songData.add(new Song("test", "artist"));
-//		songData.add(new Song("test2", "artist2"));
-//		songData.add(new Song("test", "artist"));
-//		songData.add(new Song("test", "artist"));
-//		songData.add(new Song("test", "artist"));
+		//xmlHandler.createFile();
+		//xmlHandler.initXML();
+		//xmlHandler.writeSong(new Song("test", "artist"));
+		//xmlHandler.writeSong(new Song("test2", "artist2"));
+		//xmlHandler.writeSong(new Song("test3", "artist3"));
+		//songData =  xmlHandler.readSong();
+		songData.add(new Song("abc", "crtist"));
+		songData.add(new Song("abc", "zrtist2"));
+		songData.add(new Song("abc", "artist"));
+		songData.add(new Song("test", "artist"));
+		songData.add(new Song("test", "artist"));
 		
 	}
 	
@@ -55,7 +55,7 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("PrimaryScene.fxml"));
             rootLayout = (AnchorPane) loader.load();
             
-            // Give the controller access to the main app.
+            // Give the controller access to the main app
             PrimarySceneController controller = loader.getController();
             controller.setMain(this);
             
@@ -67,6 +67,10 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+    
+    public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
     public static void main(String[] args) {
         launch(args);
