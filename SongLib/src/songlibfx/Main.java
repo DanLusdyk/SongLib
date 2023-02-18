@@ -28,11 +28,11 @@ public class Main extends Application {
 		//xmlHandler.writeSong(new Song("test2", "artist2"));
 		//xmlHandler.writeSong(new Song("test3", "artist3"));
 		//songData =  xmlHandler.readSong();
-		songData.add(new Song("abc", "crtist"));
-		songData.add(new Song("abc", "zrtist2"));
+		songData.add(new Song("abc", "zrtistssssssssssssssssss"));
+		songData.add(new Song("abc", "crtist2"));
 		songData.add(new Song("abc", "artist"));
-		songData.add(new Song("test", "artist"));
-		songData.add(new Song("test", "artist"));
+		songData.add(new Song("testzb", "zartist"));
+		songData.add(new Song("testza", "artist"));
 		
 	}
 	
@@ -44,6 +44,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
     	this.primaryStage = primaryStage;
         this.primaryStage.setTitle("SongLib");
+        this.primaryStage.setResizable(false);
 
         showPrimaryScene();
     }

@@ -5,17 +5,17 @@ import java.util.Comparator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
+import javafx.util.Callback;
 
 public class PrimarySceneController {
 	
 	@FXML
-    private TableView<Song> songTable;
-    @FXML
-    private TableColumn<Song, String> nameColumn;
-    @FXML
-    private TableColumn<Song, String> artistColumn;
+    private ListView<Song> listViewName;
+	@FXML
+    private ListView<Song> listViewArtist;
 
     @FXML
     private Label nameLabel;
@@ -36,36 +36,83 @@ public class PrimarySceneController {
     // Reference to the main application
     private Main main;
     
-    public PrimarySceneController( ) {
+    public PrimarySceneController() {
     	
     }
     
     @FXML
     private void initialize() {
-    	// Initialize the person table with the two columns
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        artistColumn.setCellValueFactory(cellData -> cellData.getValue().artistProperty());
+    	// Define the callback to create custom ListCell objects
+    	Callback<ListView<Song>, ListCell<Song>> cellFactoryName = new Callback<ListView<Song>, ListCell<Song>>() {
+    	    @Override
+    	    public ListCell<Song> call(ListView<Song> listView) {
+    	        return new ListCell<Song>() {
+    	            @Override
+    	            protected void updateItem(Song song, boolean empty) {
+    	                super.updateItem(song, empty);
+    	                if (song == null || empty) {
+    	                    setText(null);
+    	                } else {
+    	                    setText(song.getName());
+    	                }
+    	            }
+    	        };
+    	    }
+    	};
+    	
+    	Callback<ListView<Song>, ListCell<Song>> cellFactoryArtist = new Callback<ListView<Song>, ListCell<Song>>() {
+    	    @Override
+    	    public ListCell<Song> call(ListView<Song> listView) {
+    	        return new ListCell<Song>() {
+    	            @Override
+    	            protected void updateItem(Song song, boolean empty) {
+    	                super.updateItem(song, empty);
+    	                if (song == null || empty) {
+    	                    setText(null);
+    	                } else {
+    	                    setText(song.getArtist());
+    	                }
+    	            }
+    	        };
+    	    }
+    	};
+    	
+        listViewName.setCellFactory(cellFactoryName);
+        listViewArtist.setCellFactory(cellFactoryArtist);
         
         // Clear song details
         showSongDetails(null);
+        
+        // Add a listener to the selected index property of listViewName
+        listViewName.getSelectionModel().selectedIndexProperty().addListener((observable, oldIndex, newIndex) -> {
+        	// Set the selected index of listViewArtist to the same index as listViewName
+        	listViewArtist.getSelectionModel().select(newIndex.intValue());
+        });
+        
+        // Add a listener to the selected index property of listViewArtist
+        listViewArtist.getSelectionModel().selectedIndexProperty().addListener((observable, oldIndex, newIndex) -> {
+        	// Set the selected index of listViewArtist to the same index as listViewName
+        	listViewName.getSelectionModel().select(newIndex.intValue());
+        });
 
         // Listen for selection changes and show the song details when changed
-        songTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showSongDetails(newValue));
+        listViewName.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showSongDetails(newValue));
+        listViewArtist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showSongDetails(newValue));
     }
     
     // called by main to give a reference back to itself
     public void setMain(Main main) {
         this.main = main;
 
-        // Add observable list data to the table
-        songTable.setItems(main.getSongData());
+        // Add observable list data to the list views
+        listViewName.setItems(main.getSongData());
+        listViewArtist.setItems(main.getSongData());
         
         // alphabetically sort pre-existing data on startup
-        songTable.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
+        listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
         
-        // preselect first item in songTable on startup
-        songTable.getSelectionModel().selectFirst();
+        // preselect first item on startup
+        listViewName.getSelectionModel().selectFirst();
     }
     
     private void showSongDetails(Song song) {
@@ -88,13 +135,13 @@ public class PrimarySceneController {
     // called when the user clicks delete button
     @FXML
     private void handleDeleteSong() {
-    	int selectedIndex = songTable.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0) {
-        	songTable.getItems().remove(selectedIndex);
-        	int newSelectedIndex = Math.min(selectedIndex, songTable.getItems().size() - 1);
-            songTable.getSelectionModel().select(newSelectedIndex);
-        }
-        if(songTable.getSelectionModel().isEmpty()) {
+    	int selectedIndex = listViewName.getSelectionModel().getSelectedIndex();
+    	if(selectedIndex >= 0) {
+    		listViewName.getItems().remove(selectedIndex);
+    		int newSelectedIndex = Math.min(selectedIndex, listViewName.getItems().size() - 1);
+    		listViewName.getSelectionModel().select(newSelectedIndex);
+    	}
+    	if(listViewName.getSelectionModel().isEmpty()) {
         	deleteButton.setDisable(true);
         }
     }
