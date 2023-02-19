@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,23 +13,23 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="songlibfx.PrimarySceneController">
    <children>
-      <SplitPane fx:id="splitPane" dividerPositions="0.298" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane fx:id="splitPane" dividerPositions="0.3879598662207358" minWidth="600.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="229.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ListView fx:id="listViewName" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="87.5" AnchorPane.topAnchor="18.0" />
-                  <ListView fx:id="listViewArtist" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="87.5" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0" />
-                  <Label alignment="CENTER" text="Name" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="87.5" AnchorPane.topAnchor="0.0" />
-                  <Label alignment="CENTER" layoutX="103.0" text="Artist" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="87.5" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ListView fx:id="listViewName" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="114.5" AnchorPane.topAnchor="18.0" />
+                  <ListView fx:id="listViewArtist" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="114.5" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0" />
+                  <Label alignment="CENTER" text="Name" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="114.5" AnchorPane.topAnchor="0.0" />
+                  <Label alignment="CENTER" layoutX="103.0" text="Artist" AnchorPane.bottomAnchor="281.0" AnchorPane.leftAnchor="114.5" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="276.0">
+          <AnchorPane minHeight="0.0" minWidth="364.0" prefHeight="298.0" prefWidth="276.0">
                <children>
-                  <Label layoutX="8.0" layoutY="6.0" text="Song Details" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="5.0" />
+                  <Label fx:id="rightPaneLabel" layoutX="8.0" layoutY="6.0" text="Song Details" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="5.0" />
                   <GridPane layoutX="7.0" layoutY="30.0" prefHeight="131.0" prefWidth="407.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="30.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="160.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="191.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -37,22 +38,32 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Name" />
-                        <Label text="Artist" GridPane.rowIndex="1" />
-                        <Label text="Album" GridPane.rowIndex="2" />
+                        <Label text="Name:" />
+                        <Label text="Artist:" GridPane.rowIndex="1" />
+                        <Label text="Album:" GridPane.rowIndex="2" />
                         <Label fx:id="nameLabel" text="Label" GridPane.columnIndex="1" />
                         <Label fx:id="artistLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label fx:id="albumLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Year" GridPane.rowIndex="3" />
+                        <Label text="Year:" GridPane.rowIndex="3" />
                         <Label fx:id="yearLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="textFieldName" maxWidth="170.0" prefWidth="150.0" visible="false" GridPane.columnIndex="1" />
+                        <TextField fx:id="textFieldArtist" maxWidth="170.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="textFieldAlbum" maxWidth="170.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="textFieldYear" maxWidth="170.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="203.0" layoutY="244.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="10.0">
+                  <ButtonBar fx:id="songDetailsButtonBar" buttonMinWidth="60.0" layoutX="203.0" layoutY="244.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="255.0">
                     <buttons>
                       <Button fx:id="addButton" mnemonicParsing="false" text="Add" />
-                        <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#handleEditSong" text="Edit" />
                         <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#handleDeleteSong" text="Delete" />
                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar fx:id="editButtonBar" buttonMinWidth="100.0" layoutX="99.0" layoutY="265.0" prefHeight="40.0" prefWidth="300.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="255.0">
+                     <buttons>
+                        <Button mnemonicParsing="false" onMouseClicked="#handleCancelEdit" text="Cancel" />
+                        <Button mnemonicParsing="false" onMouseClicked="#handleMakeChanges" text="Make Changes" />
+                     </buttons>
                   </ButtonBar>
                </children>
             </AnchorPane>
