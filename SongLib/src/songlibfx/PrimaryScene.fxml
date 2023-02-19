@@ -54,7 +54,7 @@
                   </GridPane>
                   <ButtonBar fx:id="songDetailsButtonBar" buttonMinWidth="60.0" layoutX="203.0" layoutY="244.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="255.0">
                     <buttons>
-                      <Button fx:id="addButton" mnemonicParsing="false" text="Add" />
+                      <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#handleAdd" text="Add" />
                         <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#handleEditSong" text="Edit" />
                         <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#handleDeleteSong" text="Delete" />
                     </buttons>
@@ -63,6 +63,12 @@
                      <buttons>
                         <Button mnemonicParsing="false" onMouseClicked="#handleCancelEdit" text="Cancel" />
                         <Button mnemonicParsing="false" onMouseClicked="#handleMakeChanges" text="Make Changes" />
+                     </buttons>
+                  </ButtonBar>
+                  <ButtonBar fx:id="addButtonBar" buttonMinWidth="100.0" layoutX="99.0" layoutY="265.0" prefHeight="40.0" prefWidth="300.0" visible="false" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="154.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="255.0">
+                     <buttons>
+                        <Button fx:id="cancelAddButton" mnemonicParsing="false" onMouseClicked="#handleCancelAdd" text="Cancel" />
+                        <Button fx:id="addSongButton" mnemonicParsing="false" onMouseClicked="#handleAddSong" text="Add Song" />
                      </buttons>
                   </ButtonBar>
                </children>

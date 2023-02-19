@@ -41,6 +41,8 @@ public class PrimarySceneController {
     private ButtonBar songDetailsButtonBar;
     @FXML
     private ButtonBar editButtonBar;
+    @FXML
+    private ButtonBar addButtonBar;
     
     @FXML
     private Button deleteButton;
@@ -53,6 +55,11 @@ public class PrimarySceneController {
     private Button cancelEditButton;
     @FXML
     private Button makeEditButton;
+    
+    @FXML
+    private Button cancelAddButton;
+    @FXML
+    private Button addSongButton;
     
     @FXML
     private TextField textFieldName;
@@ -308,6 +315,121 @@ public class PrimarySceneController {
     	
     	listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
     	int newIndex = selectedIndex;
+    	for(int i = 0; i < listViewName.getItems().size(); i++) {
+    		if(listViewName.getItems().get(i).getName().equals(textFieldName.getText()) && listViewName.getItems().get(i).getArtist().equals(textFieldArtist.getText())) {
+    			newIndex = i;
+    			break;
+    		}
+    	}
+    	listViewName.getSelectionModel().select(newIndex);
+    }
+    
+    @FXML
+    private void handleAdd() {
+    	rightPaneLabel.setText("Add A New Song");
+    	
+    	songDetailsButtonBar.setVisible(false);
+    	addButtonBar.setVisible(true);
+    	
+    	listViewName.getSelectionModel().clearSelection();
+    	
+    	listViewName.setMouseTransparent(true);
+    	listViewArtist.setMouseTransparent(true);
+    	
+    	textFieldName.setText("");
+    	textFieldArtist.setText("");
+    	textFieldAlbum.setText("");
+    	textFieldYear.setText("");
+    	
+    	textFieldName.setVisible(true);
+    	textFieldArtist.setVisible(true);
+    	textFieldAlbum.setVisible(true);
+    	textFieldYear.setVisible(true);
+    }
+    
+    @FXML
+    private void handleCancelAdd() {
+    	rightPaneLabel.setText("Song Details");
+    	
+    	textFieldName.setVisible(false);
+    	textFieldArtist.setVisible(false);
+    	textFieldAlbum.setVisible(false);
+    	textFieldYear.setVisible(false);
+    	
+    	addButtonBar.setVisible(false);
+    	songDetailsButtonBar.setVisible(true);
+    	
+    	listViewName.setMouseTransparent(false);
+    	listViewArtist.setMouseTransparent(false);
+    	
+    	listViewName.getSelectionModel().selectFirst();
+    }
+    
+    @FXML
+    private void handleAddSong() {
+    	if(textFieldName.getText().isBlank()) {
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Name");
+            alert.setHeaderText("No Song Name Entered");
+            alert.setContentText("A name must be entered for the song.");
+
+            alert.showAndWait();
+    	}
+    	if(textFieldArtist.getText().isBlank()) {
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Artist");
+            alert.setHeaderText("No Artist Entered");
+            alert.setContentText("An artist must be entered for the song.");
+
+            alert.showAndWait();
+    	}
+    	
+    	if(textFieldName.getText().isBlank() || textFieldArtist.getText().isBlank()) return;
+    	
+    	boolean alreadyExists = false;
+    	int selectedIndex = listViewName.getSelectionModel().getSelectedIndex();
+    	for(int i = 0; i < listViewName.getItems().size(); i++) {
+    		if(i == selectedIndex) continue;
+    		if(textFieldName.getText().equals(listViewName.getItems().get(i).getName()) && textFieldArtist.getText().equals(listViewName.getItems().get(i).getArtist())) {
+    			alreadyExists = true;
+    			
+    			Alert alert = new Alert(AlertType.WARNING);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("Duplicate Name And Artist");
+                alert.setHeaderText("A Song With This Name And Artist Already Exists");
+                alert.setContentText("Your edited song must have a unique name and artist.");
+
+                alert.showAndWait();
+    		}
+    	}
+    	
+    	if(alreadyExists) {
+    		return;
+    	}
+    	
+    	Song newSong = new Song(textFieldName.getText(), textFieldArtist.getText());
+    	if(!textFieldAlbum.getText().isBlank()) newSong.setAlbum(textFieldAlbum.getText());
+    	if(!textFieldYear.getText().isEmpty()) newSong.setYear(Integer.parseInt(textFieldYear.getText()));
+    	
+    	listViewName.getItems().add(newSong);
+    	
+    	rightPaneLabel.setText("Song Details");
+    	
+    	textFieldName.setVisible(false);
+    	textFieldArtist.setVisible(false);
+    	textFieldAlbum.setVisible(false);
+    	textFieldYear.setVisible(false);
+    	
+    	addButtonBar.setVisible(false);
+    	songDetailsButtonBar.setVisible(true);
+    	
+    	listViewName.setMouseTransparent(false);
+    	listViewArtist.setMouseTransparent(false);
+    	
+    	listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
+    	int newIndex = 0;
     	for(int i = 0; i < listViewName.getItems().size(); i++) {
     		if(listViewName.getItems().get(i).getName().equals(textFieldName.getText()) && listViewName.getItems().get(i).getArtist().equals(textFieldArtist.getText())) {
     			newIndex = i;
