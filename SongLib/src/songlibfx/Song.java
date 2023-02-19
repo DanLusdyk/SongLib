@@ -1,3 +1,5 @@
+// Daniel Lusdyk, Ian Wilkinson
+
 package songlibfx;
 
 import javafx.beans.property.IntegerProperty;
