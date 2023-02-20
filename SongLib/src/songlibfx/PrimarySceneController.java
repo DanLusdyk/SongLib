@@ -273,7 +273,10 @@ public class PrimarySceneController {
     	int selectedIndex = listViewName.getSelectionModel().getSelectedIndex();
     	for(int i = 0; i < listViewName.getItems().size(); i++) {
     		if(i == selectedIndex) continue;
-    		if(textFieldName.getText().equals(listViewName.getItems().get(i).getName()) && textFieldArtist.getText().equals(listViewName.getItems().get(i).getArtist())) {
+    		
+    		String name = textFieldName.getText().toLowerCase();
+    		String artist = textFieldArtist.getText().toLowerCase();
+    		if(name.equals(listViewName.getItems().get(i).getName().toLowerCase()) && artist.equals(listViewName.getItems().get(i).getArtist().toLowerCase())) {
     			alreadyExists = true;
     			
     			Alert alert = new Alert(AlertType.WARNING);
@@ -394,7 +397,10 @@ public class PrimarySceneController {
     	int selectedIndex = listViewName.getSelectionModel().getSelectedIndex();
     	for(int i = 0; i < listViewName.getItems().size(); i++) {
     		if(i == selectedIndex) continue;
-    		if(textFieldName.getText().equals(listViewName.getItems().get(i).getName()) && textFieldArtist.getText().equals(listViewName.getItems().get(i).getArtist())) {
+    		
+    		String name = textFieldName.getText().toLowerCase();
+    		String artist = textFieldArtist.getText().toLowerCase();
+    		if(name.equals(listViewName.getItems().get(i).getName().toLowerCase()) && artist.equals(listViewName.getItems().get(i).getArtist().toLowerCase())) {
     			alreadyExists = true;
     			
     			Alert alert = new Alert(AlertType.WARNING);

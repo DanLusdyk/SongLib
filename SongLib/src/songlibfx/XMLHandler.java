@@ -30,15 +30,14 @@ import org.xml.sax.SAXException;
 public class XMLHandler {
 	
 	File songFile;
-	private final String path = "SongLib/src/songlibfx/songFile.xml";
+	private final String path = "SongLib/data/songFile.xml";
 
 
-	public void createFile(){
+	public void startHandler(){
 	    try {
 	    	songFile = new File(path);
 	        if (songFile.createNewFile()) {
-	          System.out.println("File created: " + songFile.getName());
-	          System.out.println(songFile.getAbsolutePath());
+	          initXML();
 	        } else {
 		         System.out.println(songFile.getAbsolutePath());
 	          System.out.println("File already exists.");
@@ -51,6 +50,7 @@ public class XMLHandler {
 	}
 	
 	public void initXML() {
+		
 		try {
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -81,45 +81,47 @@ public class XMLHandler {
 	}
 	
 	
-	public void writeSong(Song song){
-		  
-        try {
-            File xmlFile = new File(path);
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document doc = documentBuilder.parse(xmlFile);
-			
-			Element root = doc.getDocumentElement();
-			
-            Element songElement = doc.createElement("songElement");
-
-            Element nameElement = doc.createElement("Name");
-            nameElement.appendChild(doc.createTextNode(song.getName()));
-            songElement.appendChild(nameElement);
-
-            Element artistElement = doc.createElement("Artist");
-            artistElement.appendChild(doc.createTextNode(song.getArtist()));
-            songElement.appendChild(artistElement);
-            
-            Element albumElement = doc.createElement("Album");
-            albumElement.appendChild(doc.createTextNode(song.getAlbum()));
-            songElement.appendChild(albumElement);
-            
-            Element yearElement = doc.createElement("Year");
-            String yearString = String.valueOf(song.getYear());
-            yearElement.appendChild(doc.createTextNode(yearString));
-            songElement.appendChild(yearElement);
-
-    		root.appendChild(songElement);	
-    		
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(xmlFile);
-            transformer.transform(source, result);
-            
-        } catch (Exception e) {
-        	e.printStackTrace();
+	public void writeSong(ObservableList<Song> songs){
+		for(int i = 0; i < songs.size(); i++) {
+			Song song = songs.get(i);
+			try {
+				File xmlFile = new File(path);
+				DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+				Document doc = documentBuilder.parse(xmlFile);
+				
+				Element root = doc.getDocumentElement();
+				
+				Element songElement = doc.createElement("songElement");
+				
+				Element nameElement = doc.createElement("Name");
+				nameElement.appendChild(doc.createTextNode(song.getName()));
+				songElement.appendChild(nameElement);
+				
+				Element artistElement = doc.createElement("Artist");
+				artistElement.appendChild(doc.createTextNode(song.getArtist()));
+				songElement.appendChild(artistElement);
+				
+				Element albumElement = doc.createElement("Album");
+				albumElement.appendChild(doc.createTextNode(song.getAlbum()));
+				songElement.appendChild(albumElement);
+				
+				Element yearElement = doc.createElement("Year");
+				String yearString = String.valueOf(song.getYear());
+				yearElement.appendChild(doc.createTextNode(yearString));
+				songElement.appendChild(yearElement);
+				
+				root.appendChild(songElement);	
+				
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(xmlFile);
+				transformer.transform(source, result);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
  
 
@@ -127,14 +129,6 @@ public class XMLHandler {
 
             
           
-	}
-	
-	public void updateSong() {
-		
-	}
-	
-	public void deleteSong() {
-		
 	}
 	
 	public ObservableList<Song> readSong() {

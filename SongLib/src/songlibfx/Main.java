@@ -19,22 +19,23 @@ public class Main extends Application {
 	
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
-	//private XMLHandler xmlHandler = new XMLHandler();
+	private XMLHandler xmlHandler = new XMLHandler();
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 	
 	public Main() {
 		// Add some sample data
-		//xmlHandler.createFile();
-		//xmlHandler.initXML();
-		//xmlHandler.writeSong(new Song("test", "artist"));
-		//xmlHandler.writeSong(new Song("test2", "artist2"));
-		//xmlHandler.writeSong(new Song("test3", "artist3"));
-		//songData =  xmlHandler.readSong();
-		songData.add(new Song("abc", "zrtistssssssssssssssssss"));
-		songData.add(new Song("abc", "crtist2"));
-		songData.add(new Song("abc", "artist"));
-		songData.add(new Song("testzb", "zartist"));
-		songData.add(new Song("testza", "artist"));
+		//Start xmlHandler
+		xmlHandler.startHandler();
+		
+		//Initialize SongData to Data recorded in Xml file
+		songData = xmlHandler.readSong();
+
+//		songData =  xmlHandler.readSong();
+//		songData.add(new Song("abc", "zrtistssssssssssssssssss"));
+//		songData.add(new Song("abc", "crtist2"));
+//		songData.add(new Song("abc", "artist"));
+//		songData.add(new Song("testzb", "zartist"));
+//		songData.add(new Song("testza", "artist"));
 		
 	}
 	
@@ -49,6 +50,12 @@ public class Main extends Application {
         this.primaryStage.setResizable(false);
 
         showPrimaryScene();
+    }
+    
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        xmlHandler.writeSong(songData);
     }
     
     public void showPrimaryScene() {
