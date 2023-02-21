@@ -39,7 +39,6 @@ public class XMLHandler {
 
 	public void startHandler(){
 	    try {
-	    	System.out.println(path);
 	    	songFile = new File(path);
 	        if (songFile.createNewFile()) {
 	          initXML();

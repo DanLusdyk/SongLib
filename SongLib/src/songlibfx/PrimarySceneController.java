@@ -181,7 +181,10 @@ public class PrimarySceneController {
             nameLabel.setText(song.getName());
             artistLabel.setText(song.getArtist());
             albumLabel.setText(song.getAlbum());
-            yearLabel.setText(Integer.toString(song.getYear()));
+            if(song.getYear() == 0 ) {
+            	yearLabel.setText("None");
+            }
+            else {yearLabel.setText(Integer.toString(song.getYear()));}
 
         } else {
             // Song is null, remove all the text
