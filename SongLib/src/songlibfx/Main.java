@@ -23,12 +23,12 @@ public class Main extends Application {
 	private ObservableList<Song> songData = FXCollections.observableArrayList();
 	
 	public Main() {
-		// Add some sample data
+		
 		//Start xmlHandler
 		xmlHandler.startHandler();
+		songData = xmlHandler.readSong();
 		
 		//Initialize SongData to Data recorded in Xml file
-		songData = xmlHandler.readSong();
 
 //		songData =  xmlHandler.readSong();
 //		songData.add(new Song("abc", "zrtistssssssssssssssssss"));
@@ -52,9 +52,13 @@ public class Main extends Application {
         showPrimaryScene();
     }
     
+    //Used to Write into XML on exit
     @Override
     public void stop(){
         System.out.println("Stage is closing");
+        for (int i = 0 ; i < songData.size(); i++) {
+        	System.out.println(songData.get(i).getName());
+        }
         xmlHandler.writeSong(songData);
     }
     

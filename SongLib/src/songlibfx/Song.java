@@ -19,12 +19,12 @@ public class Song {
 	}
 	
 	public Song(String name, String artist) {
-		this.name = new SimpleStringProperty(name);
-		this.artist = new SimpleStringProperty(artist);
+		this.name = new SimpleStringProperty(name.trim());
+		this.artist = new SimpleStringProperty(artist.trim());
 		
 		// Some initial dummy data, just for convenient testing
-		this.album = new SimpleStringProperty("some_album");
-		this.year = new SimpleIntegerProperty(1234);
+		this.album = new SimpleStringProperty("None");
+		this.year = new SimpleIntegerProperty(0);
 	}
 	
 	public String getName() {
@@ -32,7 +32,7 @@ public class Song {
 	}
 
 	public void setName(String name) {
-		this.name.set(name);
+		this.name.set(name.trim());
 	}
 	
 	public StringProperty nameProperty() {
@@ -44,7 +44,7 @@ public class Song {
 	}
 
 	public void setArtist(String artist) {
-		this.artist.set(artist);
+		this.artist.set(artist.trim());
 	}
 	
 	public StringProperty artistProperty() {
@@ -56,7 +56,7 @@ public class Song {
 	}
 
 	public void setAlbum(String album) {
-		this.album.set(album);
+		this.album.set(album.trim());
 	}
 	
 	public StringProperty albumProperty() {
@@ -68,7 +68,9 @@ public class Song {
 	}
 
 	public void setYear(int year) {
-		this.year.set(year);
+		if (year > 0) {	
+			this.year.set(year);
+		}
 	}
 	
 	public IntegerProperty yearProperty() {

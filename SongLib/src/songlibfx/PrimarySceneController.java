@@ -3,6 +3,7 @@
 package songlibfx;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -194,6 +196,11 @@ public class PrimarySceneController {
     @FXML
     private void handleDeleteSong() {
     	int selectedIndex = listViewName.getSelectionModel().getSelectedIndex();
+    	
+    	//Confirmation
+    	boolean isConfirm = confirmOp(); 
+    	if(!isConfirm) return;
+    	
     	if(selectedIndex >= 0) {
     		listViewName.getItems().remove(selectedIndex);
     		int newSelectedIndex = Math.min(selectedIndex, listViewName.getItems().size() - 1);
@@ -292,6 +299,23 @@ public class PrimarySceneController {
     	if(alreadyExists) {
     		return;
     	}
+    	
+    	if(textFieldName.getText().contains("|") || textFieldArtist.getText().contains("|") || textFieldAlbum.getText().contains("|") || textFieldYear.getText().contains("|") ) {
+			
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("Invalid Character");
+            alert.setHeaderText("Invalid Character: '|' ");
+            alert.setContentText("Please remove the '|' character.");
+            
+            alert.showAndWait();
+            
+            return;
+    	}
+    	
+    	//Confirmation
+    	boolean isConfirm = confirmOp(); 
+    	if(!isConfirm) return;
     	
     	Song selectedSong = listViewName.getItems().get(selectedIndex);
     	listViewName.getItems().get(selectedIndex).setName(textFieldName.getText());
@@ -417,6 +441,24 @@ public class PrimarySceneController {
     		return;
     	}
     	
+    	if(textFieldName.getText().contains("|") || textFieldArtist.getText().contains("|") || textFieldAlbum.getText().contains("|") || textFieldYear.getText().contains("|") ) {
+			
+    		Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("Invalid Character");
+            alert.setHeaderText("Invalid Character: '|' ");
+            alert.setContentText("Please remove the '|' character.");
+            
+            alert.showAndWait();
+            
+            return;
+    	}
+    	
+    	
+    	//Confirmation
+    	boolean isConfirm = confirmOp(); 
+    	if(!isConfirm) return;
+    	
     	Song newSong = new Song(textFieldName.getText(), textFieldArtist.getText());
     	if(!textFieldAlbum.getText().isBlank()) newSong.setAlbum(textFieldAlbum.getText());
     	if(!textFieldYear.getText().isEmpty()) newSong.setYear(Integer.parseInt(textFieldYear.getText()));
@@ -445,5 +487,22 @@ public class PrimarySceneController {
     		}
     	}
     	listViewName.getSelectionModel().select(newIndex);
+    }
+    
+    
+    //Confirmation Pop Up
+    @FXML
+    public boolean confirmOp() {
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Confirmation Dialog");
+    	alert.setHeaderText("Look, a Confirmation Dialog");
+    	alert.setContentText("Are you ok with this?");
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    	    return true;
+    	} else {
+    		return false;
+    	}
     }
 }
