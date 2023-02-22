@@ -15,13 +15,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
 
 public class PrimarySceneController {
 	
@@ -75,7 +72,7 @@ public class PrimarySceneController {
     private TextField textFieldYear;
     
     // Reference to the main application
-    private Main main;
+    private SongLib main;
     
     public PrimarySceneController() {
     	
@@ -152,7 +149,7 @@ public class PrimarySceneController {
     }
     
     // called by main to give a reference back to itself
-    public void setMain(Main main) {
+    public void setMain(SongLib main) {
         this.main = main;
 
         // Add observable list data to the list views
@@ -160,7 +157,7 @@ public class PrimarySceneController {
         listViewArtist.setItems(main.getSongData());
         
         // alphabetically sort pre-existing data on startup
-        listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
+        listViewName.getItems().sort(Comparator.comparing(Song::getNameUpper).thenComparing(Song::getArtist));
         
         // preselect first item on startup
         listViewName.getSelectionModel().selectFirst();
@@ -345,7 +342,7 @@ public class PrimarySceneController {
     	listViewName.setMouseTransparent(false);
     	listViewArtist.setMouseTransparent(false);
     	
-    	listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
+    	listViewName.getItems().sort(Comparator.comparing(Song::getNameUpper).thenComparing(Song::getArtist));
     	int newIndex = selectedIndex;
     	for(int i = 0; i < listViewName.getItems().size(); i++) {
     		if(listViewName.getItems().get(i).getName().equals(textFieldName.getText()) && listViewName.getItems().get(i).getArtist().equals(textFieldArtist.getText())) {
@@ -480,8 +477,8 @@ public class PrimarySceneController {
     	
     	listViewName.setMouseTransparent(false);
     	listViewArtist.setMouseTransparent(false);
-    	
-    	listViewName.getItems().sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
+
+    	listViewName.getItems().sort(Comparator.comparing(Song::getNameUpper).thenComparing(Song::getArtist));
     	int newIndex = 0;
     	for(int i = 0; i < listViewName.getItems().size(); i++) {
     		if(listViewName.getItems().get(i).getName().equals(textFieldName.getText()) && listViewName.getItems().get(i).getArtist().equals(textFieldArtist.getText())) {

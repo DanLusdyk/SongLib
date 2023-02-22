@@ -31,6 +31,10 @@ public class Song {
 		return name.get();
 	}
 
+	public String getNameUpper() {
+		return name.get().toUpperCase();
+	}
+
 	public void setName(String name) {
 		this.name.set(name.trim());
 	}
